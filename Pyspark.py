@@ -74,7 +74,7 @@ hashtags = data.select(fn.explode("data.value.payload.entities.hashtags").alias(
 
 hashtagCount = hashtags.groupBy(fn.window(hashtags["created_at"], "10 minutes", "5 minutes"), "hashtag")     .count().orderBy(["window", "count"], ascending=[False, False])
 
-query = hashtagCount.writeStream.outputMode("update").format("console").option('truncate', 'false').start()
+query = hashtagCount.writeStream.outputMode("update").format("console").trigger(Trigger.ProcessingTime("2 seconds")).option('truncate', 'false').start()
 query.awaitTermination()
 
 
