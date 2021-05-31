@@ -9,6 +9,7 @@ import pyspark.sql.functions as fn
 from pyspark.sql import SparkSession
 from pyspark.sql.types import *
 from delta.table import *
+from time import sleep
 
 # In[ ]:
 
@@ -87,9 +88,11 @@ def upsertToDelta(df, batch_id):
    .execute())
 
 query2 = hashtagCount.writeStream.outputMode("update").format("delta").trigger(Trigger.ProcessingTime("300 seconds")).option('checkpointLocation', checkpoint_location).foreachBatch(upsertToDelta).start()
+sleep(600)
 query2.awaitTermination()
 
 query1= hashtags.writeStream.outputMode("update").format("delta").trigger(Trigger.ProcessingTime("300 seconds")).option('checkpointLocation', checkpoint_location).foreachBatch(upsertToDelta).start()
+sleep(600)
 query1.awaitTermination()
 
 
