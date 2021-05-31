@@ -8,7 +8,7 @@ import json
 import pyspark.sql.functions as fn
 from pyspark.sql import SparkSession
 from pyspark.sql.types import *
-
+from delta.table import *
 
 # In[ ]:
 
@@ -77,10 +77,19 @@ hashtags = data.select(fn.explode("data.value.payload.entities.hashtags").alias(
 
 hashtagCount = hashtags.groupBy(fn.window(hashtags["created_at"], "10 minutes", "5 minutes"), "hashtag")     .count().orderBy(["window", "count"], ascending=[False, False])
 
-query2 = hashtagCount.writeStream.outputMode("update").format("console").trigger(Trigger.ProcessingTime("300 seconds")).option('checkpointLocation', checkpoint_location).start()
+def upsertToDelta(df, batch_id): 
+  (DeltaTable
+   .forPath(spark, delta_location)
+   .alias("t")
+   .merge(df.alias("s"), "s.kafka_key = t.kafka_key")
+   .whenMatchedUpdateAll()
+   .whenNotMatchedInsertAll()
+   .execute())
+
+query2 = hashtagCount.writeStream.outputMode("update").format("delta").trigger(Trigger.ProcessingTime("300 seconds")).option('checkpointLocation', checkpoint_location).foreachBatch(upsertToDelta).start()
 query2.awaitTermination()
 
-query1= hashtags.writeStream.outputMode("update").format("console").trigger(Trigger.ProcessingTime("300 seconds")).option('checkpointLocation', checkpoint_location).start()
+query1= hashtags.writeStream.outputMode("update").format("delta").trigger(Trigger.ProcessingTime("300 seconds")).option('checkpointLocation', checkpoint_location).foreachBatch(upsertToDelta).start()
 query1.awaitTermination()
 
 
