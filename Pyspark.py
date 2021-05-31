@@ -69,16 +69,19 @@ data = df.select(fn.from_json(df["value"].cast("string"), schema).alias("value")
 data.printSchema()
 
 hashtags = data.select(fn.explode("data.value.payload.entities.hashtags").alias("hashtag"),
-                       fn.to_timestamp("data.value.payload.created_at").alias("created_at")) \
+                       fn.col("data.value.payload.coordinates").alias("coordinates"),
+                       fn.col("data.value.payload.user.location").alias("location_name"),
+                       fn.col("data.value.payload.text").alias("text"),
+                       fn.to_timestamp("data.value.payload.created_at").alias("created_time")) \
     .select(fn.lower(fn.col("hashtag.text")).alias("hashtag"), "created_at")
 
 hashtagCount = hashtags.groupBy(fn.window(hashtags["created_at"], "10 minutes", "5 minutes"), "hashtag")     .count().orderBy(["window", "count"], ascending=[False, False])
 
-query = hashtagCount.writeStream.outputMode("update").format("console").trigger(Trigger.ProcessingTime("2 seconds")).option('truncate', 'false').start()
-query.awaitTermination()
+query2 = hashtagCount.writeStream.outputMode("update").format("console").trigger(Trigger.ProcessingTime("300 seconds")).option('checkpointLocation', checkpoint_location).start()
+query2.awaitTermination()
 
-
-# In[ ]:
+query1= hashtags.writeStream.outputMode("update").format("console").trigger(Trigger.ProcessingTime("300 seconds")).option('checkpointLocation', checkpoint_location).start()
+query1.awaitTermination()
 
 
 
