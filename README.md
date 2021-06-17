@@ -8,15 +8,24 @@ This is an ongoing project using live data from Twitter API. I tried several way
 ### Kafka
 #### Creating topic on kafka
 Input in command lines:
-bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic example-topic
+bin/kafka-topics.sh 
+--create 
+
+--zookeeper localhost:2181 
+
+--replication-factor 1 
+
+--partitions 2 
+
+--topic example-topic
 
 Files for configuration and connecting with Twitter API (see the files above)
 
 ### Spark
-Read streaming data from Kafka with readStream -- Preprocessing -- Execute the query with writeStream -- Store streamed structured data in S3.
+Read streaming data from Kafka with readStream -- Preprocessing -- Store streamed structured data in S3.
 
 ## Storation
-Because of the high frequency of access and uploading, use Delta Table storation in AWS S3.
+Because of the high frequency of access and uploading in streaming, use Delta Table storation in AWS S3.
 
 ## Analysis
 1. Working on developing dashboards to visulize:
