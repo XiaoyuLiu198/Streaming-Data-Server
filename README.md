@@ -2,8 +2,7 @@
 
 This is an ongoing project using live data from Twitter API. I tried several ways to process data using Spark(in scala), pyspark(using python), tweepy(using python) and Kafka to collect data. I have finished the collection and transformation process. 
 
-![diagram](https://user-images.githubusercontent.com/65391883/121826609-390c8700-cc7e-11eb-92f7-66cc6c643d8b.jpg)
-
+![diagram](https://user-images.githubusercontent.com/65391883/122473883-0ddcad00-cf88-11eb-9ad7-d41521b8e2b5.jpg)
 
 ## Collecting and Preprocessing 
 ### Kafka
