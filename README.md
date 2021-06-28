@@ -17,7 +17,7 @@ bin/kafka-topics.sh
 
 --partitions 2 
 
---topic example-topic
+--topic demo-3-twitter
 
 Files for configuration and connecting with Twitter API (see the files above)
 
