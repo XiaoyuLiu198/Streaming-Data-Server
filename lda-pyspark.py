@@ -20,7 +20,12 @@ spark._jsc.hadoopConfiguration().set("fs.s3a.impl","org.apache.hadoop.fs.s3a.S3A
 spark._jsc.hadoopConfiguration().set("com.amazonaws.services.s3.enableV4", "true")
 spark._jsc.hadoopConfiguration().set("fs.s3a.aws.credentials.provider","org.apache.hadoop.fs.s3a.BasicAWSCredentialsProvider")
 spark._jsc.hadoopConfiguration().set("fs.s3a.endpoint", "us-east-2.amazonaws.com")
-df=spark.read.csv('xxxxxx')
+get_last_modified = lambda obj: int(obj['LastModified'].strftime('%s'))
+
+s3 = boto3.client('s3')
+objs = s3.list_objects_v2(Bucket='twitter')['Contents']
+last_added = [obj['Key'] for obj in sorted(objs, key=get_last_modified)][0]
+df=spark.read.csv(last_added)
 
 # convert input dataframe to document. 
 document_assembler = DocumentAssembler()     .setInputCol("headline_text")     .setOutputCol("document")     .setCleanupMode("shrink")
