@@ -28,6 +28,8 @@ Read streaming data from Kafka with readStream -- Preprocessing -- Store streame
 Because of the high frequency of access and uploading in streaming, use Delta Table storation in AWS S3.
 
 ## Analysis
+![Screen Shot 2021-07-10 at 7 35 18 PM](https://user-images.githubusercontent.com/65391883/125179683-19517b80-e1b6-11eb-914f-c770f66c4b85.png)
+
 1. Working on developing dashboards to visulize:
       a. Barplot of top hashtags
       b. Map of area-hashtag
