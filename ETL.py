@@ -87,13 +87,9 @@ def upsertToDelta(df, batch_id):
    .whenNotMatchedInsertAll()
    .execute())
 
-query2 = hashtagCount.writeStream.outputMode("update").format("delta").trigger(Trigger.ProcessingTime("300 seconds")).option('checkpointLocation', checkpoint_location).foreachBatch(upsertToDelta).start()
+query = hashtagCount.writeStream.outputMode("update").format("delta").trigger(Trigger.ProcessingTime("300 seconds")).option('checkpointLocation', checkpoint_location).foreachBatch(upsertToDelta).start()
 sleep(600)
-query2.awaitTermination()
-
-query1= hashtags.writeStream.outputMode("update").format("delta").trigger(Trigger.ProcessingTime("300 seconds")).option('checkpointLocation', checkpoint_location).foreachBatch(upsertToDelta).start()
-sleep(600)
-query1.awaitTermination()
+query.awaitTermination()
 
 
 
