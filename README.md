@@ -20,12 +20,15 @@ bin/kafka-topics.sh
 --topic demo-3-twitter
 
 Files for configuration and connecting with Twitter API (see the files above)
+Streaming result sample:
+![s1](https://user-images.githubusercontent.com/65391883/126735637-a27106e6-32ac-4df9-9541-96dd45fe8578.png)
+
 
 ### Spark
-Read streaming data from Kafka with readStream -- Preprocessing -- Store streamed structured data in S3.
+Read streaming data from Kafka(loading with transformed schema), then use window-operation and spark-sql functions todo preprocessing. Then store streamed structured data in S3.
 
 ## Storation
-Because of the high frequency of access and uploading in streaming, use Delta Table storation in AWS S3.
+Because of the high frequency of access and uploading in streaming, use Delta Table storation in AWS S3. You can refer to official document: https://docs.delta.io/latest/delta-storage.html
 
 ## Analysis
 ![Screen Shot 2021-07-10 at 7 35 18 PM](https://user-images.githubusercontent.com/65391883/125179683-19517b80-e1b6-11eb-914f-c770f66c4b85.png)
