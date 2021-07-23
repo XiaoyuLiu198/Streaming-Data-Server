@@ -19,18 +19,19 @@ bin/kafka-topics.sh
 
 --topic demo-3-twitter
 
-Files for configuration and connecting with Twitter API (see the files above)
+Files for configuration and connecting Twitter API with tweepy. (see the kafka-Proder.py above)
 Streaming result sample:
 ![s1](https://user-images.githubusercontent.com/65391883/126735637-a27106e6-32ac-4df9-9541-96dd45fe8578.png)
 
 
 ### Spark
-Read streaming data from Kafka(loading with transformed schema), then use window-operation and spark-sql functions todo preprocessing. Then store streamed structured data in S3.
+Read streaming data from Kafka(loading with transformed schema), then use window-operation and spark-sql functions todo preprocessing. Then store streamed structured data in S3. See ETL.py for code.
 
 ## Storation
 Because of the high frequency of access and uploading in streaming, use Delta Table storation in AWS S3. You can refer to official document: https://docs.delta.io/latest/delta-storage.html
 
 ## Analysis
+See lda-pyspark.py for code.
 ![Screen Shot 2021-07-10 at 7 35 18 PM](https://user-images.githubusercontent.com/65391883/125179683-19517b80-e1b6-11eb-914f-c770f66c4b85.png)
 
 1. Working on developing dashboards to visulize:
@@ -53,6 +54,6 @@ Because of the high frequency of access and uploading in streaming, use Delta Ta
 
 ## Pipeline construction
 There are several ways to deploy the above tasks:
-1. Deploy with Airflow(cons: inconvenient to tune hyper-parameters)
+1. Deploy with Airflow(cons: inconvenient to tune hyper-parameters) (see dag1.py for code)
 2. Deploy all the tasks on AWS, services include S3(for storage), Sagemaker(for ML), Kinesis(to replace Kafka), EC2(schedule and compute) 
 
