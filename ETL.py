@@ -23,8 +23,12 @@ print(os.environ['HADOOP_HOME'])
 
 
 spark = SparkSession     .builder     .appName("twitter")     .master("local[*]")     .config('spark.jars.packages', 'org.apache.spark:spark-sql-kafka-0-10_2.11:2.4.4')     .getOrCreate()
-
-
+hadoop_conf=spark.sparkContext._jsc.hadoopConfiguration()
+hadoop_conf.set("fs.s3n.impl", "org.apache.hadoop.fs.s3native.NativeS3FileSystem")
+hadoop_conf.set("fs.s3n.awsAccessKeyId", aws_key)
+hadoop_conf.set("fs.s3n.awsSecretAccessKey", aws_secret)
+conf = spark.sparkContext._conf.setAll([('spark.delta.logStore.class','org.apache.spark.sql.delta.storage.S3SingleDriverLogStore')])
+spark.sparkContext._conf.getAll()
 # In[ ]:
 
 
