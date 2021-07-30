@@ -1,6 +1,6 @@
 # Streaming Data Analysis
 
-This is an ongoing project using live data from Twitter API. I tried several ways to process data using Spark(in scala), pyspark(using python), tweepy(using python) and Kafka to collect data. I have finished the collection and transformation process. 
+This is an ongoing project using live data from Twitter API. It's based on Kafka, Spark, Airflow and AWS.
 
 ![diagram](https://user-images.githubusercontent.com/65391883/122473883-0ddcad00-cf88-11eb-9ad7-d41521b8e2b5.jpg)
 
