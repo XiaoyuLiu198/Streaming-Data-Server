@@ -82,16 +82,7 @@ hashtags = data.select(fn.explode("data.value.payload.entities.hashtags").alias(
 
 hashtagCount = hashtags.groupBy(fn.window(hashtags["created_at"], "10 minutes", "5 minutes"), "hashtag")     .count().orderBy(["window", "count"], ascending=[False, False])
 
-def upsertToDelta(df, batch_id): 
-  (DeltaTable
-   .forPath(spark, delta_location)
-   .alias("t")
-   .merge(df.alias("s"), "s.kafka_key = t.kafka_key")
-   .whenMatchedUpdateAll()
-   .whenNotMatchedInsertAll()
-   .execute())
-
-query = hashtagCount.writeStream.outputMode("update").format("delta").trigger(Trigger.ProcessingTime("300 seconds")).option('checkpointLocation', checkpoint_location).foreachBatch(upsertToDelta).start()
+query = hashtagCount.writeStream.outputMode("append").format("delta").trigger(Trigger.ProcessingTime("300 seconds")).option('checkpointLocation', checkpoint_location).start()
 sleep(600)
 query.awaitTermination()
 
