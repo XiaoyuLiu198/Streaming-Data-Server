@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
-
-
+import sys
 from sparknlp.base import *
 from sparknlp.annotator import *
 from sparknlp.pretrained import PretrainedPipeline
@@ -63,7 +61,7 @@ cv_model = cv.fit(tokens_df)
 vectorized_tokens = cv_model.transform(tokens_df)
 
 from pyspark.ml.clustering import LDA
-num_topics = 10
+num_topics = sys.argv[0]
 lda = LDA(k=num_topics, maxIter=10)
 model = lda.fit(vectorized_tokens)
 ll = model.logLikelihood(vectorized_tokens)
