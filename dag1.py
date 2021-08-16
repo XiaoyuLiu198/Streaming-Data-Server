@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
-
-
 import time
 from builtins import range
 from pprint import pprint
@@ -15,42 +12,40 @@ from airflow.operators.python_operator import PythonOperator
 from airflow.operators import BashOperator
 
 
-# In[ ]:
-
-
 default_args = {
-    'owner': 'airflow',
     'depends_on_past': False,
     'retries': 1,
     'retry_delay': timedelta(minutes=5)
 }
 with DAG(
-    'ETL+LDA',
+    dag_id='ETL_LDA',
     default_args=default_args,
     description='DAG for ETL and Topic analysis',
     schedule_interval='00 9 * * *',
-    start_date=days_ago(2),
     tags=['trial1'],
 ) as dag:
     t1 = BashOperator(
         task_id='ETL',
-        depends_on_past=False,
-        bash_command='/Users/molly1998/Desktop/python/airflow/dags/scripts/ETL.py',
+        bash_command='/Users/molly1998/Desktop/python/airflow/pyForDag/ETL1.py',
     )
+    
+    t2=PythonOperator(
+        task_id='ldaCV',
+        python_callable=ldaCV,
+        provide_context=True,
+    )
+    
     
     t3 = BashOperator(
-        task_id='templated',
-        depends_on_past=False,
-        bash_command='/Users/molly1998/Desktop/python/airflow/dags/scripts/preprocess-for-lda-pipeline.py',
+        task_id='lda_model',
+        bash_command='python /Users/molly1998/Desktop/python/airflow/pyForDag/lda.py {{ task_instance.xcom_pull(task_ids='cross_validation') }} ',
+        provide_context=True,
     )
     
-    t3 = BashOperator(
-        task_id='templated',
-        depends_on_past=False,
-        bash_command='/Users/molly1998/Desktop/python/airflow/dags/scripts/lda-model.py',
-        ##edit hyper-parameter here
-        params={'num_topics': 10,'iterate_times':10},
+    t4 = BashOperator(
+        task_id='produce_dashboard',
+        bash_command='/Users/molly1998/Desktop/python/airflow/pyForDag/dashboard.py',
     )
     
-    t1 >> t2 >> t3
+    t1 >> t2 >> t3 >> t4
 
