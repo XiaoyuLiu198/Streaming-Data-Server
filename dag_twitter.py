@@ -21,8 +21,8 @@ with DAG(
     dag_id='ETL_LDA',
     default_args=default_args,
     description='DAG for ETL and Topic analysis',
-    schedule_interval='00 9 * * *',
-    tags=['trial1'],
+    schedule_interval='@daily',
+    tags=['trial'],
 ) as dag:
     t1 = BashOperator(
         task_id='ETL',
