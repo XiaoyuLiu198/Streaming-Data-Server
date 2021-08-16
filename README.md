@@ -25,7 +25,7 @@ Streaming result sample:
 
 
 ### Spark
-Read streaming data from Kafka(loading with transformed schema), then use window-operation and spark-sql functions todo preprocessing. Then store streamed structured data in S3. See ETL.py for code.
+Read streaming data from Kafka(loading with transformed schema), then use window-operation and spark-sql functions to do preprocessing. Then store streamed structured data in S3. See ETL.py for code.
 
 ## Storation
 Because of the high frequency of access and uploading in streaming, use Delta Table storation in AWS S3. You can refer to official document: https://docs.delta.io/latest/delta-storage.html
@@ -38,6 +38,7 @@ See lda-pyspark.py for code.
       a. Barplot of top hashtags
       b. Map of area-hashtag
 2. Group the texts with LDA topic analysis.
+   Firstly find out the hyperparameter with cross validation, then pass it to full dataset with Xcom.
    
    Visulization examples:
    
@@ -53,7 +54,4 @@ See lda-pyspark.py for code.
 
 
 ## Pipeline construction
-There are several ways to deploy the above tasks:
-1. Deploy with Airflow(cons: inconvenient to tune hyper-parameters) (see dag1.py for code)
-2. Deploy all the tasks on AWS, services include S3(for storage), Sagemaker(for ML), Kinesis(to replace Kafka), EC2(schedule and compute) 
-
+Deploy with Airflow(cons: inconvenient to tune hyper-parameters) (see dag_twitter.py for code)
