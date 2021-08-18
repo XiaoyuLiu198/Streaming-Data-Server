@@ -35,16 +35,14 @@ See lda-pyspark.py for code.
 ![Screen Shot 2021-07-10 at 7 35 18 PM](https://user-images.githubusercontent.com/65391883/125179683-19517b80-e1b6-11eb-914f-c770f66c4b85.png)
 
 1. Working on developing dashboards to visulize:
+      
       a. Barplot of top hashtags
+      
       b. Map of area-hashtag
 2. Group the texts with LDA topic analysis.
    Firstly find out the hyperparameter with cross validation, then pass it to full dataset with Xcom.
    
    Visulization examples:
-   
-   WordCloud:
-   
-   ![fig](https://user-images.githubusercontent.com/65391883/121825072-1a09f700-cc76-11eb-91eb-3c7354edccd7.png)
    
    With pyLDAvis:
    
