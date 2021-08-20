@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
-
-
 import boto3
 import io
 import dash
@@ -16,15 +13,9 @@ import requests
 from plotly.subplots import make_subplots
 from datetime import datetime
 
-
-# In[ ]:
-
-
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
-
-#-------------------------------------------------------------------------------
 
 def update_twitter():
     #access structure data from S3(this part will be uploaded afterwards)
@@ -151,7 +142,6 @@ def update_twitter():
     )
         ])
 
-#-------------------------------------------------------------------------------
 app.layout = html.Div([
     dcc.Interval(
                 id='my_interval',
@@ -168,18 +158,14 @@ app.layout = html.Div([
     ]),
     ])
 
-#-------------------------------------------------------------------------------
-# Callback to update news
+                            
+# Callback to update 
 @app.callback(Output("twitter_live", "children"), [Input("my_interval", "n_intervals")])
 def update_twitter_div(n):
     return update_twitter()
-#-------------------------------------------------------------------------------
+                            
 if __name__ == '__main__':
     app.run_server(debug=False)
-
-
-# In[ ]:
-
 
 
 
