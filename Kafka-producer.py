@@ -1,8 +1,16 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
-
+#Firstly set up kafka topics on cmd lines 
+-----------------------------------------
+#Input in command lines:
+#bin/kafka-topics.sh 
+#--create 
+#--zookeeper localhost:xxxx 
+#--replication-factor 1 
+#--partitions 3 
+#--topic demo-3-twitter
+-----------------------------------------
 
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
@@ -25,7 +33,7 @@ class StdOutListener(StreamListener):
         print (status)
         
 if __name__ == '__main__':
-    producer = KafkaProducer(bootstrap_servers='localhost:9092')
+    producer = KafkaProducer(bootstrap_servers='localhost:xxxx')
     l = StdOutListener()
     auth = OAuthHandler(api_key, api_secret)
     auth.set_access_token(access_token, access_token_secret)
