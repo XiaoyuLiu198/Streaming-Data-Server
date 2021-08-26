@@ -1,44 +1,34 @@
 # Streaming Data Analysis
 
-This is an ongoing project using live data from Twitter API. It's based on Kafka, Spark, Airflow and AWS.
+This is a project using live data from Twitter API, based on Kafka, Spark, Airflow and AWS. Frequency of triggering is 5mins/day.
 
-![diagram](https://user-images.githubusercontent.com/65391883/122473883-0ddcad00-cf88-11eb-9ad7-d41521b8e2b5.jpg)
+![Screen Shot 2021-08-26 at 12 13 28 AM](https://user-images.githubusercontent.com/65391883/130904760-f497998a-e3c1-458a-b8a5-17ebee03d024.png)
+
 
 ## Collecting and Preprocessing 
 ### Kafka
-#### Creating topic on kafka
-Input in command lines:
-bin/kafka-topics.sh 
---create 
+![Screen Shot 2021-08-26 at 12 35 50 AM](https://user-images.githubusercontent.com/65391883/130906724-46c139ef-f4ad-4c6c-80da-f16cf2c71a2d.png)
 
---zookeeper localhost:2181 
-
---replication-factor 1 
-
---partitions 2 
-
---topic demo-3-twitter
-
-Files for configuration and connecting Twitter API with tweepy. (see the kafka-Proder.py above)
 Streaming result sample:
 ![s1](https://user-images.githubusercontent.com/65391883/126735637-a27106e6-32ac-4df9-9541-96dd45fe8578.png)
 
 
 ### Spark
-Read streaming data from Kafka(loading with transformed schema), then use window-operation and spark-sql functions to do preprocessing. Then store streamed structured data in S3. See ETL.py for code.
+![Screen Shot 2021-08-26 at 12 42 15 AM](https://user-images.githubusercontent.com/65391883/130907275-85ee9c9c-9250-4d65-88f8-685543c967f1.png)
+
+See ETL.py for code.
 
 ## Storation
-Because of the high frequency of access and uploading in streaming, use Delta Table storation in AWS S3. You can refer to official document: https://docs.delta.io/latest/delta-storage.html
+Because of the high frequency of access and uploading in streaming, use Delta Table storation in AWS S3. 
 
 ## Analysis
-See lda-pyspark.py for code.
-![Screen Shot 2021-07-10 at 7 35 18 PM](https://user-images.githubusercontent.com/65391883/125179683-19517b80-e1b6-11eb-914f-c770f66c4b85.png)
 
-1. Working on developing dashboards to visulize:
+
+See lda-pyspark.py for code.
+
+1. Visulize barplot of top hashtags
+![Screen Shot 2021-07-10 at 7 35 18 PM](https://user-images.githubusercontent.com/65391883/125179683-19517b80-e1b6-11eb-914f-c770f66c4b85.png)
       
-      a. Barplot of top hashtags
-      
-      b. Map of area-hashtag
 2. Group the texts with LDA topic analysis.
    Firstly find out the hyperparameter with cross validation, then pass it to full dataset with Xcom.
    
