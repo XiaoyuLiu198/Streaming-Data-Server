@@ -23,6 +23,7 @@ Because of the high frequency of access and uploading in streaming, use Delta Ta
 
 ## Analysis
 
+![Screen Shot 2021-08-26 at 11 38 58 PM](https://user-images.githubusercontent.com/65391883/131072611-e4cbf615-480c-4f2f-bf48-903bb82eacd1.png)
 
 See lda-pyspark.py for code.
 
@@ -42,4 +43,4 @@ See lda-pyspark.py for code.
 
 
 ## Pipeline construction
-Deploy with Airflow(cons: inconvenient to tune hyper-parameters) (see dag_twitter.py for code)
+Deploy with Airflow(see dag_twitter.py for code)
