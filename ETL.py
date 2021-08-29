@@ -84,7 +84,7 @@ hashtagCount = hashtags.groupBy(fn.window(hashtags["created_at"], "10 minutes", 
 
 query = hashtagCount.writeStream.outputMode("append").format("delta").trigger(Trigger.ProcessingTime("300 seconds")).option('checkpointLocation', checkpoint_location).start()
 sleep(600)
-query.awaitTermination()
+query.stop()
 
 
 
