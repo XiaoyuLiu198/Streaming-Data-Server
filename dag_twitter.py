@@ -26,7 +26,7 @@ with DAG(
 ) as dag:
     t1 = BashOperator(
         task_id='ETL',
-        bash_command='/Users/molly1998/Desktop/python/airflow/pyForDag/ETL1.py',
+        bash_command='python /Users/molly1998/Desktop/python/airflow/pyForDag/ETL1.py',
     )
     
     t2=PythonOperator(
@@ -44,7 +44,7 @@ with DAG(
     
     t4 = BashOperator(
         task_id='produce_dashboard',
-        bash_command='/Users/molly1998/Desktop/python/airflow/pyForDag/dashboard.py',
+        bash_command='python /Users/molly1998/Desktop/python/airflow/pyForDag/dashboard.py',
     )
     
     t1 >> t2 >> t3 >> t4
