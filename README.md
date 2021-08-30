@@ -32,7 +32,10 @@ See lda-pyspark.py for code.
       
 ### 2. Group the texts with LDA topic analysis.
 
-   Firstly find out the hyperparameter with cross validation, then pass it to full dataset with Xcom.
+   Firstly find out the hyperparameter with cross validation, then pass it to full dataset with Xcom. Use sparknlp session and mlib to do LDA analysis. Result is as followed:
+   
+   ![Screen Shot 2021-08-29 at 9 25 14 PM](https://user-images.githubusercontent.com/65391883/131276753-1c265b7b-76de-4f5d-bcda-68f527e3dc59.png)
+
    
    Visulization examples:
    
