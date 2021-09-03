@@ -28,7 +28,7 @@ Because of the high frequency of access and uploading in streaming, use Delta Ta
 See lda-pyspark.py for code.
 
 ### 1. Visulize barplot of top hashtags
-![Screen Shot 2021-07-10 at 7 35 18 PM](https://user-images.githubusercontent.com/65391883/125179683-19517b80-e1b6-11eb-914f-c770f66c4b85.png)
+![Screen Shot 2021-09-02 at 9 57 58 PM](https://user-images.githubusercontent.com/65391883/131943980-02f3e789-0464-469f-a57b-8a4974b119ca.png)
       
 ### 2. Group the texts with LDA topic analysis.
 
