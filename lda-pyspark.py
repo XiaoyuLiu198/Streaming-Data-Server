@@ -97,7 +97,7 @@ class lda():
         s3 = boto3.client('s3')
         objs = s3.list_objects_v2(Bucket='twitter')['Contents']
         last_added = [obj['Key'] for obj in sorted(objs, key=get_last_modified)][0]
-        df=spark.read.csv(last_added)
+        df=spark.read.format("delta").load(last_added)
         vectorized=self.preprocess(df)
         num_topics = sys.argv[0]
         lda = LDA(k=num_topics, maxIter=10)
