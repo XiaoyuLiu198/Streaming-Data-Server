@@ -9,8 +9,6 @@ This is a project using live data from Twitter API, based on Kafka, Spark, Airfl
 ### Kafka
 ![Screen Shot 2021-08-26 at 12 35 50 AM](https://user-images.githubusercontent.com/65391883/130906724-46c139ef-f4ad-4c6c-80da-f16cf2c71a2d.png)
 
-Streaming result sample:
-![s1](https://user-images.githubusercontent.com/65391883/126735637-a27106e6-32ac-4df9-9541-96dd45fe8578.png)
 
 
 ### Spark
