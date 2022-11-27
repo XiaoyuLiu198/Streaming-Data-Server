@@ -46,4 +46,4 @@ See lda-pyspark.py for code.
 
 
 ## Pipeline construction
-Deploy with Airflow(see dag_twitter.py for code)
+Deploy with Airflow(see dags/main.py for code)
